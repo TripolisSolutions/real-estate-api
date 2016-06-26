@@ -6,11 +6,6 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// PropertyType
-type PropertyType string
-
-const PTHouse PropertyType = "house"
-
 // PropertyFacingDirection
 type PropertyFacingDirection string
 
@@ -45,6 +40,9 @@ type TranslatableText struct {
 type PropertyCategory struct {
 	ID   string             `bson:"_id" json:"id"`
 	Name []TranslatableText `bson:"name" json:"name"`
+
+	CAt time.Time `bson:"c_at" json:"c_at"`
+	UAt time.Time `bson:"u_at" json:"u_at"`
 }
 
 type Property struct {
@@ -56,8 +54,8 @@ type Property struct {
 	} `bson:"images" json:"images"`
 	Desc []TranslatableText `bson:"desc" json:"desc"`
 
-	Type           PropertyType `bson:"type" json:"type"`
-	AvailableUntil time.Time    `bson:"available_until" json:"available_until"`
+	Type           string    `bson:"type" json:"type"` // PropertyCategory.ID
+	AvailableUntil time.Time `bson:"available_until" json:"available_until"`
 	Size           struct {
 		Width float32 `bson:"width" json:"width"`
 		Depth float32 `bson:"depth" json:"depth"`

@@ -17,9 +17,12 @@ func Hello(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
 }
 
 func main() {
+	category := categoryHandlers{}
+
 	router := fasthttprouter.New()
 	router.GET("/", Index)
 	router.GET("/hello/:name", Hello)
+	router.GET("/categories", category.find)
 
 	if err := fasthttp.ListenAndServe(":9001", router.Handler); err != nil {
 		log.WithFields(log.Fields{
