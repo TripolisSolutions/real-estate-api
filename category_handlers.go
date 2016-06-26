@@ -2,45 +2,47 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"net/url"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
+	"gopkg.in/mgo.v2/bson"
+
+	"github.com/TripolisSolutions/go-helper/utilities"
 )
 
 type categoryHandlers struct {
 }
 
 func (*categoryHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
-	fmt.Fprintf(ctx, "hello, %s!\n", ps.ByName("name"))
+	if categories, err := FindPropertyCategories(); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to find property category")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	} else {
+		ctx.Response.SetStatusCode(http.StatusOK)
+		ctx.Response.SetBody(utilities.ToJSON(struct {
+			Docs []PropertyCategory `json:"docs"`
+		}{Docs: categories}))
+	}
+}
 
-	log.Infof("querystring %s", string(ctx.Request.URI().QueryString()))
-	queries, err := url.ParseQuery(string(ctx.Request.URI().QueryString()))
-	if err != nil {
+func (*categoryHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
+	var category PropertyCategory
+	json.Unmarshal(ctx.Request.Body(), &category)
+
+	category.ID = bson.NewObjectId()
+	if err := category.Insert(); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail insert property category")
 		ctx.Response.SetStatusCode(http.StatusInternalServerError)
 		return
 	}
 
-	coleID := queries.Get("col_id")
-
-	log.WithFields(
-		log.Fields{"cole_id": coleID},
-	).Info("find categories")
-
-	ctx.Response.SetStatusCode(200)
-}
-
-func (*categoryHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
-	var payload struct {
-		Name string `json:"name"`
-	}
-	json.Unmarshal(ctx.Request.Body(), &payload)
-	
-	if err := category.Insert() 
-	//	log.WithFields(
-	//		log.Fields{"cole_id": coleID},
-	//	).Info("find categories")
+	ctx.Response.SetStatusCode(http.StatusCreated)
+	ctx.Response.SetBody(utilities.ToJSON(category))
 }

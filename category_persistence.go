@@ -12,7 +12,7 @@ import (
 const PropertyCategoryCollection = "property_categories"
 
 // Insert is ..
-func (category PropertyCategory) Insert() error {
+func (category *PropertyCategory) Insert() error {
 
 	if err := validator.Validate(category); err != nil {
 		return err

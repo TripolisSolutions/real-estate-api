@@ -38,7 +38,7 @@ type TranslatableText struct {
 }
 
 type PropertyCategory struct {
-	ID   string             `bson:"_id" json:"id"`
+	ID   bson.ObjectId      `bson:"_id" json:"id"`
 	Name []TranslatableText `bson:"name" json:"name"`
 
 	CAt time.Time `bson:"c_at" json:"c_at"`
@@ -54,8 +54,8 @@ type Property struct {
 	} `bson:"images" json:"images"`
 	Desc []TranslatableText `bson:"desc" json:"desc"`
 
-	Type           string    `bson:"type" json:"type"` // PropertyCategory.ID
-	AvailableUntil time.Time `bson:"available_until" json:"available_until"`
+	CategoryID     bson.ObjectId `bson:"category_id" json:"category_id"` // PropertyCategory.ID
+	AvailableUntil time.Time     `bson:"available_until" json:"available_until"`
 	Size           struct {
 		Width float32 `bson:"width" json:"width"`
 		Depth float32 `bson:"depth" json:"depth"`
