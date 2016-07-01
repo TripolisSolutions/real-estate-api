@@ -81,3 +81,14 @@ func (property *Property) Insert() error {
 
 	return nil
 }
+
+func deletePropertyByID(ID string) error {
+	if err := mongo.Execute("monotonic", PropertyCollection,
+		func(collection *mgo.Collection) error {
+			return collection.RemoveId(bson.ObjectIdHex(ID))
+		}); err != nil {
+		return err
+	}
+
+	return nil
+}

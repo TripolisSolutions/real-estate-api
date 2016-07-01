@@ -132,5 +132,13 @@ func (*propertyHandlers) get(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params)
 }
 
 func (*propertyHandlers) remove(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
+	if err := deletePropertyByID(ps.ByName("id")); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to delete property")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	}
 
+	ctx.Response.SetStatusCode(http.StatusOK)
 }
