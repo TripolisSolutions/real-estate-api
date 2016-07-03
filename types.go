@@ -45,14 +45,19 @@ type PropertyCategory struct {
 	UAt time.Time `bson:"u_at" json:"u_at"`
 }
 
+type Image struct {
+	ID     string `bson:"_id" json:"id"`
+	URL    string `bson:"url" json:"url"`
+	Width  int    `bson:"width" json:"width"`
+	Height int    `bson:"height" json:"height"`
+}
+
 type Property struct {
-	ID     bson.ObjectId      `bson:"_id" json:"id"`
-	Name   []TranslatableText `bson:"name" json:"name"`
-	Images struct {
-		ThumbnailURL string `bson:"thumbnail_url" json:"thumbnail_url"`
-		MainURL      string `bson:"main_url" json:"main_url"`
-	} `bson:"images" json:"images"`
-	Desc []TranslatableText `bson:"desc" json:"desc"`
+	ID            bson.ObjectId      `bson:"_id" json:"id"`
+	Name          []TranslatableText `bson:"name" json:"name"`
+	Thumbnail     Image              `bson:"thumbnail_image" json:"thumbnail_image"`
+	GalleryImages []Image            `bson:"gallery_images" json:"gallery_images"`
+	Desc          []TranslatableText `bson:"desc" json:"desc"`
 
 	CategoryID     bson.ObjectId `bson:"category_id" json:"category_id"` // PropertyCategory.ID
 	AvailableUntil time.Time     `bson:"available_until" json:"available_until"`
