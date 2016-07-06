@@ -1,0 +1,121 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "vwpCebe1/Uw4IVvhoCEzrsBoA+E=",
+			"path": "github.com/Sirupsen/logrus",
+			"revision": "418b41d23a1bf978c06faea5313ba194650ac088",
+			"revisionTime": "2015-09-08T20:46:18Z"
+		},
+		{
+			"checksumSHA1": "Z5+c931OvyC8aXw2MhjAzqg6REE=",
+			"path": "github.com/TripolisSolutions/go-helper/mgojuice",
+			"revision": "f448f1762ad8ad3c2803a235b2622b1d653485d5",
+			"revisionTime": "2016-06-21T04:03:53Z"
+		},
+		{
+			"checksumSHA1": "NvQvtTuZSLXEQKHoRupCOk4W8ww=",
+			"path": "github.com/TripolisSolutions/go-helper/utilities",
+			"revision": "f448f1762ad8ad3c2803a235b2622b1d653485d5",
+			"revisionTime": "2016-06-21T04:03:53Z"
+		},
+		{
+			"checksumSHA1": "+QbKOXJnJzNgEgrMRkgv0Dc27PU=",
+			"path": "github.com/buaazp/fasthttprouter",
+			"revision": "0729217d031ab353a3e34b94e8544e167f7ce9a4",
+			"revisionTime": "2016-05-27T05:33:41Z"
+		},
+		{
+			"checksumSHA1": "URsJa4y/sUUw/STmbeYx9EKqaYE=",
+			"path": "github.com/golang/glog",
+			"revision": "44145f04b68cf362d9c4df2182967c2275eaefed",
+			"revisionTime": "2014-09-23T20:47:00Z"
+		},
+		{
+			"checksumSHA1": "hbgvz7+SR3FPTdAox102RMNoBX8=",
+			"path": "github.com/kelseyhightower/envconfig",
+			"revision": "4e0792c28c6af6d74af7bac93eedb34a29107010",
+			"revisionTime": "2015-06-22T17:05:36Z"
+		},
+		{
+			"checksumSHA1": "nfsPW9mmBQaK2gKbfRwXlRZmeuM=",
+			"path": "github.com/klauspost/compress/flate",
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
+		},
+		{
+			"checksumSHA1": "fwC1ob/fwvPkjuwAusYPDwdwBUU=",
+			"path": "github.com/klauspost/compress/gzip",
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
+		},
+		{
+			"checksumSHA1": "MSfzKJkDgCfuW95gPLm4wbf08Q4=",
+			"path": "github.com/klauspost/compress/zlib",
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
+		},
+		{
+			"checksumSHA1": "iKPMvbAueGfdyHcWCgzwKzm8WVo=",
+			"path": "github.com/klauspost/cpuid",
+			"revision": "09cded8978dc9e80714c4d85b0322337b0a1e5e0",
+			"revisionTime": "2016-03-02T07:53:16Z"
+		},
+		{
+			"checksumSHA1": "hX+j017F4PEtIUGflAneDtLC6hs=",
+			"path": "github.com/klauspost/crc32",
+			"revision": "19b0b332c9e4516a6370a0456e6182c3b5036720",
+			"revisionTime": "2016-02-19T14:26:09Z"
+		},
+		{
+			"checksumSHA1": "cWweVM411vqH1MR1jriEq6cT100=",
+			"path": "github.com/valyala/bytebufferpool",
+			"revision": "928aed2629ab6f9bca48045451feefb20161601e",
+			"revisionTime": "2016-06-24T11:57:35Z"
+		},
+		{
+			"checksumSHA1": "ZOTApgevkt+W5CZ68MULrrhIW/E=",
+			"path": "github.com/valyala/fasthttp",
+			"revision": "3d3774799e6e558a26fb000e5dd90db6d3d64595",
+			"revisionTime": "2016-06-24T14:29:10Z"
+		},
+		{
+			"checksumSHA1": "Lp4soNBRoCYC+Y0UZzWWOFxm3zg=",
+			"path": "github.com/valyala/fasthttp/fasthttputil",
+			"revision": "3d3774799e6e558a26fb000e5dd90db6d3d64595",
+			"revisionTime": "2016-06-24T14:29:10Z"
+		},
+		{
+			"checksumSHA1": "4pi0MZxLqwEq4apmYY9ey08nBuI=",
+			"path": "gopkg.in/mgo.v2",
+			"revision": "f402e3a216db333ae6b3ba68b9152a34a0bc6984",
+			"revisionTime": "2015-10-06T02:07:38Z"
+		},
+		{
+			"checksumSHA1": "K/lQInTR+txzqW/I5/rDzEXDndw=",
+			"path": "gopkg.in/mgo.v2/bson",
+			"revision": "f402e3a216db333ae6b3ba68b9152a34a0bc6984",
+			"revisionTime": "2015-10-06T02:07:38Z"
+		},
+		{
+			"checksumSHA1": "CkCDTsyN2Lbj1cL8+oaYKoPpI9w=",
+			"path": "gopkg.in/mgo.v2/internal/sasl",
+			"revision": "f402e3a216db333ae6b3ba68b9152a34a0bc6984",
+			"revisionTime": "2015-10-06T02:07:38Z"
+		},
+		{
+			"checksumSHA1": "+1WDRPaOphSCmRMxVPIPBV4aubc=",
+			"path": "gopkg.in/mgo.v2/internal/scram",
+			"revision": "f402e3a216db333ae6b3ba68b9152a34a0bc6984",
+			"revisionTime": "2015-10-06T02:07:38Z"
+		},
+		{
+			"checksumSHA1": "zRWtZ+FN31PlNBs1G7pbAbWXldk=",
+			"path": "gopkg.in/validator.v2",
+			"revision": "8e445b9dc14ab1a1a78cc1f712df991307173ee6",
+			"revisionTime": "2014-11-23T09:56:26Z"
+		}
+	],
+	"rootPath": "github.com/TripolisSolutions/real-estate-api"
+}

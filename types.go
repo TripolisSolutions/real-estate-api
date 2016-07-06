@@ -6,11 +6,6 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// PropertyType
-type PropertyType string
-
-const PTHouse PropertyType = "house"
-
 // PropertyFacingDirection
 type PropertyFacingDirection string
 
@@ -43,21 +38,29 @@ type TranslatableText struct {
 }
 
 type PropertyCategory struct {
-	ID   string             `bson:"_id" json:"id"`
+	ID   bson.ObjectId      `bson:"_id" json:"id"`
 	Name []TranslatableText `bson:"name" json:"name"`
+
+	CAt time.Time `bson:"c_at" json:"c_at"`
+	UAt time.Time `bson:"u_at" json:"u_at"`
+}
+
+type Image struct {
+	ID     string `bson:"_id" json:"id"`
+	URL    string `bson:"url" json:"url"`
+	Width  int    `bson:"width" json:"width"`
+	Height int    `bson:"height" json:"height"`
 }
 
 type Property struct {
-	ID     bson.ObjectId      `bson:"_id" json:"id"`
-	Name   []TranslatableText `bson:"name" json:"name"`
-	Images struct {
-		ThumbnailURL string `bson:"thumbnail_url" json:"thumbnail_url"`
-		MainURL      string `bson:"main_url" json:"main_url"`
-	} `bson:"images" json:"images"`
-	Desc []TranslatableText `bson:"desc" json:"desc"`
+	ID            bson.ObjectId      `bson:"_id" json:"id"`
+	Name          []TranslatableText `bson:"name" json:"name"`
+	Thumbnail     Image              `bson:"thumbnail_image" json:"thumbnail_image"`
+	GalleryImages []Image            `bson:"gallery_images" json:"gallery_images"`
+	Desc          []TranslatableText `bson:"desc" json:"desc"`
 
-	Type           PropertyType `bson:"type" json:"type"`
-	AvailableUntil time.Time    `bson:"available_until" json:"available_until"`
+	CategoryID     bson.ObjectId `bson:"category_id" json:"category_id"` // PropertyCategory.ID
+	AvailableUntil time.Time     `bson:"available_until" json:"available_until"`
 	Size           struct {
 		Width float32 `bson:"width" json:"width"`
 		Depth float32 `bson:"depth" json:"depth"`
