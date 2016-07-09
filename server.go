@@ -19,6 +19,10 @@ func main() {
 		log.Fatalf("error[%s] while ensure index on properties collection", err)
 	}
 
+	if err := seedDataIfNeeded(); err != nil {
+		log.Fatalf("error[%s] while seed data", err)
+	}
+
 	category := categoryHandlers{}
 	property := propertyHandlers{}
 

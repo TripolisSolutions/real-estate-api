@@ -32,6 +32,10 @@ const PUVietnamDong PricingUnit = "VND"
 const PUUSD PricingUnit = "USD"
 const PUEuro PricingUnit = "EURO"
 
+// languages
+const Vietnamese = "vietnamese"
+const English = "english"
+
 type TranslatableText struct {
 	Language string `bson:"language" json:"language"`
 	Text     string `bson:"text" json:"text"`

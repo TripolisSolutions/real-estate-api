@@ -13,8 +13,10 @@ const PropertyCollection = "properties"
 
 func EnsureIndexProperty() error {
 	if err := ensureIndex(PropertyCollection, mgo.Index{
-		Name: "text",
-		Key:  []string{"$text:name.text", "$text:desc.text", "$text:address.name.text"},
+		Name:             "text",
+		Key:              []string{"$text:name.text", "$text:desc.text", "$text:address.name.text"},
+		DefaultLanguage:  "english",
+		LanguageOverride: "english",
 	}); err != nil {
 		return err
 	}
