@@ -6,5 +6,11 @@ Default port is 9001
 
 - go-helper
 
-## TODO
-- 8 directions
+## Environment Vars
+
+```text
+MONGODB_HOST
+MONGODB_DATABASE
+MONGODB_DATABASE
+MONGODB_PASSWORD
+```
