@@ -33,5 +33,27 @@ func seedDataIfNeeded() error {
 		},
 	}
 
-	return apartment.Insert()
+	luxuryApartment := PropertyCategory{
+		ID: bson.NewObjectId(),
+		Name: []TranslatableText{
+			{
+				Language: Vietnamese,
+				Text:     "Căn hộ chung cư cao cấp",
+			},
+			{
+				Language: English,
+				Text:     "Luxury apartment",
+			},
+		},
+	}
+
+	if err := apartment.Insert(); err != nil {
+		return err
+	}
+
+	if err := luxuryApartment.Insert(); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -24,6 +24,7 @@ func (*categoryHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 		return
 	} else {
 		ctx.Response.SetStatusCode(http.StatusOK)
+		ctx.SetContentType("application/json")
 		ctx.Response.SetBody(utilities.ToJSON(struct {
 			Docs []PropertyCategory `json:"docs"`
 		}{Docs: categories}))
