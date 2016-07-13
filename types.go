@@ -63,16 +63,17 @@ type Image struct {
 
 type Property struct {
 	ID            bson.ObjectId      `bson:"_id" json:"id"`
-	Name          []TranslatableText `bson:"name" json:"name"`
-	Thumbnail     Image              `bson:"thumbnail_image" json:"thumbnail_image"`
+	Name          []TranslatableText `bson:"Name" json:"Name"`
+	Thumbnail     Image              `bson:"thumbnailImage" json:"thumbnailImage"`
 	GalleryImages []Image            `bson:"gallery_images" json:"gallery_images"`
 	Desc          []TranslatableText `bson:"desc" json:"desc"`
 
 	CategoryID     bson.ObjectId `bson:"category_id" json:"category_id"` // PropertyCategory.ID
+	SalesType      string        `bson:"salesType" json:"salesType"`
 	AvailableUntil time.Time     `bson:"available_until" json:"available_until"`
 	Size           struct {
-		Width float32 `bson:"width" json:"width"`
-		Depth float32 `bson:"depth" json:"depth"`
+		Width  float32 `bson:"width" json:"width"`
+		Length float32 `bson:"depth" json:"depth"`
 	} `bson:"size" json:"size"`
 	Address struct {
 		Name        []TranslatableText `bson:"name" json:"name"`
@@ -81,7 +82,7 @@ type Property struct {
 			lon float64 `bson:"lon" json:"lon"`
 		} `bson:"coordinates" json:"coordinates"`
 	} `bson:"address" json:"address"`
-	BedRoomCount    int                     `bson:"bed_room_count" json:"bed_room_count"`
+	BedRoomCount    int                     `bson:"bedRoomCount" json:"bedRoomCount"`
 	FacingDirection PropertyFacingDirection `bson:"facing_direction" json:"facing_direction"`
 
 	RentalPeriod struct {
