@@ -32,6 +32,11 @@ const PUVietnamDong PricingUnit = "VND"
 const PUUSD PricingUnit = "USD"
 const PUEuro PricingUnit = "EURO"
 
+type TranslatablePrice struct {
+	Value    float32
+	Currency PricingUnit
+}
+
 // languages
 const Vietnamese = "vietnamese"
 const English = "english"
@@ -76,17 +81,16 @@ type Property struct {
 			lon float64 `bson:"lon" json:"lon"`
 		} `bson:"coordinates" json:"coordinates"`
 	} `bson:"address" json:"address"`
-	BedCount        int                     `bson:"bed_count" json:"bed_count"`
+	BedRoomCount    int                     `bson:"bed_room_count" json:"bed_room_count"`
 	FacingDirection PropertyFacingDirection `bson:"facing_direction" json:"facing_direction"`
 
 	RentalPeriod struct {
 		Digits float32          `bson:"digits" json:"digits"`
 		Unit   RentalPeriodUnit `bson:"unit" json:"unit"`
 	} `bson:"rental_period" json:"rental_period"`
-	Price struct {
-		Digits float32     `bson:"digits" json:"digits"`
-		Unit   PricingUnit `bson:"unit" json:"unit"`
-	} `bson:"price" json:"price"`
+	Price TranslatablePrice `bson:"price" json:"price"`
+
+	Visible bool `bson:"visible" json:"visible"`
 
 	CAt time.Time `bson:"c_at" json:"c_at"`
 	UAt time.Time `bson:"u_at" json:"u_at"`
