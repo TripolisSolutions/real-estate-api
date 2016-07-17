@@ -74,9 +74,40 @@ func (property *Property) Insert() error {
 	property.CAt = time.Now()
 	property.UAt = time.Now()
 
+	for i := range property.Desc {
+		sanitizedHtml, err := sanitizeHtml(property.Desc[i].Text)
+		if err != nil {
+			return err
+		}
+
+		property.Desc[i].Text = sanitizedHtml
+	}
+
 	if err := mongo.Execute("monotonic", PropertyCollection,
 		func(collection *mgo.Collection) error {
 			return collection.Insert(property)
+		}); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (property *Property) Update() error {
+	property.UAt = time.Now()
+
+	for i := range property.Desc {
+		sanitizedHtml, err := sanitizeHtml(property.Desc[i].Text)
+		if err != nil {
+			return err
+		}
+
+		property.Desc[i].Text = sanitizedHtml
+	}
+
+	if err := mongo.Execute("monotonic", PropertyCollection,
+		func(collection *mgo.Collection) error {
+			return collection.UpdateId(property.ID, property)
 		}); err != nil {
 		return err
 	}
