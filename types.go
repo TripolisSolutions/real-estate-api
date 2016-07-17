@@ -32,6 +32,11 @@ const PUVietnamDong PricingUnit = "VND"
 const PUUSD PricingUnit = "USD"
 const PUEuro PricingUnit = "EURO"
 
+type TranslatablePrice struct {
+	Value    float32
+	Currency PricingUnit
+}
+
 // languages
 const Vietnamese = "vietnamese"
 const English = "english"
@@ -58,16 +63,17 @@ type Image struct {
 
 type Property struct {
 	ID            bson.ObjectId      `bson:"_id" json:"id"`
-	Name          []TranslatableText `bson:"name" json:"name"`
-	Thumbnail     Image              `bson:"thumbnail_image" json:"thumbnail_image"`
+	Name          []TranslatableText `bson:"Name" json:"Name"`
+	Thumbnail     Image              `bson:"thumbnailImage" json:"thumbnailImage"`
 	GalleryImages []Image            `bson:"gallery_images" json:"gallery_images"`
 	Desc          []TranslatableText `bson:"desc" json:"desc"`
 
 	CategoryID     bson.ObjectId `bson:"category_id" json:"category_id"` // PropertyCategory.ID
+	SalesType      string        `bson:"salesType" json:"salesType"`
 	AvailableUntil time.Time     `bson:"available_until" json:"available_until"`
 	Size           struct {
-		Width float32 `bson:"width" json:"width"`
-		Depth float32 `bson:"depth" json:"depth"`
+		Width  float32 `bson:"width" json:"width"`
+		Length float32 `bson:"depth" json:"depth"`
 	} `bson:"size" json:"size"`
 	Address struct {
 		Name        []TranslatableText `bson:"name" json:"name"`
@@ -76,17 +82,16 @@ type Property struct {
 			lon float64 `bson:"lon" json:"lon"`
 		} `bson:"coordinates" json:"coordinates"`
 	} `bson:"address" json:"address"`
-	BedCount        int                     `bson:"bed_count" json:"bed_count"`
+	BedRoomCount    int                     `bson:"bedRoomCount" json:"bedRoomCount"`
 	FacingDirection PropertyFacingDirection `bson:"facing_direction" json:"facing_direction"`
 
 	RentalPeriod struct {
 		Digits float32          `bson:"digits" json:"digits"`
 		Unit   RentalPeriodUnit `bson:"unit" json:"unit"`
 	} `bson:"rental_period" json:"rental_period"`
-	Price struct {
-		Digits float32     `bson:"digits" json:"digits"`
-		Unit   PricingUnit `bson:"unit" json:"unit"`
-	} `bson:"price" json:"price"`
+	Price TranslatablePrice `bson:"price" json:"price"`
+
+	Visible bool `bson:"visible" json:"visible"`
 
 	CAt time.Time `bson:"c_at" json:"c_at"`
 	UAt time.Time `bson:"u_at" json:"u_at"`
