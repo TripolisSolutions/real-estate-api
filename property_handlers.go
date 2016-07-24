@@ -60,6 +60,12 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 		filterers["category_id"] = bson.ObjectIdHex(categoryID)
 	}
 
+	log.WithFields(log.Fields{
+		"filterers": string(utilities.ToJSON(filterers)),
+		"limit":     limit,
+		"offset":    offset,
+	}).Info("finding properties")
+
 	properties, err := FindProperties(filterers, limit, offset)
 	if err != nil {
 		log.WithFields(log.Fields{
@@ -83,8 +89,8 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 
 	ctx.Response.SetStatusCode(http.StatusOK)
 	ctx.Response.SetBody(utilities.ToJSON(struct {
-		Docs  []Property
-		Total int
+		Docs  []Property `json:"docs"`
+		Total int        `json:"total"`
 	}{
 		Docs:  properties,
 		Total: total,
@@ -97,6 +103,11 @@ func (*propertyHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 	json.Unmarshal(ctx.Request.Body(), &property)
 
 	property.ID = bson.NewObjectId()
+
+	log.WithFields(log.Fields{
+		"property": property,
+	}).Info("creating")
+
 	if err := property.Insert(); err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
@@ -107,7 +118,34 @@ func (*propertyHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 
 	ctx.Response.SetStatusCode(http.StatusCreated)
 	ctx.Response.SetBody(utilities.ToJSON(struct {
-		Doc Property
+		Doc Property `json:"doc"`
+	}{
+		Doc: property,
+	}))
+}
+
+func (*propertyHandlers) update(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
+	var property Property
+	json.Unmarshal(ctx.Request.Body(), &property)
+
+	id := ps.ByName("id")
+	property.ID = bson.ObjectIdHex(id)
+
+	log.WithFields(log.Fields{
+		"property": property,
+	}).Info("updating")
+
+	if err := property.Update(); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to insert property")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	}
+
+	ctx.Response.SetStatusCode(http.StatusCreated)
+	ctx.Response.SetBody(utilities.ToJSON(struct {
+		Doc Property `json:"doc"`
 	}{
 		Doc: property,
 	}))
@@ -125,7 +163,7 @@ func (*propertyHandlers) get(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params)
 
 	ctx.Response.SetStatusCode(http.StatusCreated)
 	ctx.Response.SetBody(utilities.ToJSON(struct {
-		Doc Property
+		Doc Property `json:"doc"`
 	}{
 		Doc: property,
 	}))
