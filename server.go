@@ -35,6 +35,7 @@ func main() {
 	router.GET("/properties", property.find)
 	router.POST("/properties", property.create)
 	router.GET("/properties/:id", property.get)
+	router.PUT("/properties/:id", property.update)
 	router.DELETE("/properties/:id", property.remove)
 
 	if err := fasthttp.ListenAndServe(":9001", router.Handler); err != nil {
