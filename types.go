@@ -95,7 +95,7 @@ type Property struct {
 	RentalPeriod struct {
 		Digits float32          `bson:"digits" json:"digits"`
 		Unit   RentalPeriodUnit `bson:"unit" json:"unit"`
-	} `bson:"rental_period" json:"rentalPeriod"`
+	} `bson:"rentalPeriod" json:"rentalPeriod"`
 	Price TranslatablePrice `bson:"price" json:"price"`
 
 	Visible bool `bson:"visible" json:"visible"`
