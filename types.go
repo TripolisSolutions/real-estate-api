@@ -54,13 +54,6 @@ type PropertyCategory struct {
 	UAt time.Time `bson:"u_at" json:"u_at"`
 }
 
-type Image struct {
-	ID     string `bson:"_id" json:"id"`
-	URL    string `bson:"url" json:"url"`
-	Width  int    `bson:"width" json:"width"`
-	Height int    `bson:"height" json:"height"`
-}
-
 type Property struct {
 	ID            bson.ObjectId      `bson:"_id" json:"id"`
 	Name          []TranslatableText `bson:"name" json:"name"`
@@ -102,4 +95,14 @@ type Property struct {
 
 	CAt time.Time `bson:"c_at" json:"c_at"`
 	UAt time.Time `bson:"u_at" json:"u_at"`
+}
+
+type Image struct {
+	ID       bson.ObjectId `bson:"_id" json:"id"`
+	URL      string        `bson:"url" json:"url"`
+	Width    int           `bson:"width" json:"width"`
+	Height   int           `bson:"height" json:"height"`
+	FileName string        `bson:"fileName" json:"fileName"`
+	CAt      time.Time     `bson:"c_at" json:"c_at"`
+	UAt      time.Time     `bson:"u_at" json:"u_at"`
 }
