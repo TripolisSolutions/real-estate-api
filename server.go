@@ -37,6 +37,7 @@ func main() {
 	router.GET("/properties/:id", property.get)
 	router.PUT("/properties/:id", property.update)
 	router.DELETE("/properties/:id", property.remove)
+	router.GET("/api/categories", NotFound)
 
 	if err := fasthttp.ListenAndServe(":9001", router.Handler); err != nil {
 		log.WithFields(log.Fields{
@@ -47,4 +48,11 @@ func main() {
 
 func Index(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
 	fmt.Fprint(ctx, "Welcome to REAL ESTATE API!\n")
+}
+
+func NotFound(ctx *fasthttp.RequestCtx, _ fasthttprouter.Params) {
+	log.WithFields(log.Fields{
+		"path": string(ctx.RequestURI()),
+	}).Infoln("not found")
+	ctx.SetStatusCode(404)
 }

@@ -23,7 +23,7 @@ type RentalPeriodUnit string
 
 const RPUMonths RentalPeriodUnit = "months"
 const RPUYears RentalPeriodUnit = "years"
-const RPUDays RentalPeriodUnit = "days"
+const RPUDays RentalPeriodUnit = "dayclassNames"
 
 // PricingUnit
 type PricingUnit string
@@ -95,8 +95,8 @@ type Property struct {
 	RentalPeriod struct {
 		Digits float32          `bson:"digits" json:"digits"`
 		Unit   RentalPeriodUnit `bson:"unit" json:"unit"`
-	} `bson:"rental_period" json:"rentalPeriod"`
-	Price TranslatablePrice `bson:"price" json:"price"`
+	} `bson:"rentalPeriod" json:"rentalPeriod"`
+	Price []TranslatablePrice `bson:"price" json:"price"`
 
 	Visible bool `bson:"visible" json:"visible"`
 
