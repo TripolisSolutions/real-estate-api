@@ -10,6 +10,7 @@ import (
 )
 
 const PropertyCollection = "properties"
+const PropertyTrashCollection = "properties_trash"
 
 func EnsureIndexProperty() error {
 	if err := ensureIndex(PropertyCollection, mgo.Index{
@@ -116,6 +117,18 @@ func (property *Property) Update() error {
 }
 
 func deletePropertyByID(ID string) error {
+	property := Property{}
+	if err := property.FindByID(ID); err != nil {
+		return err
+	}
+
+	if err := mongo.Execute("monotonic", PropertyTrashCollection,
+		func(collection *mgo.Collection) error {
+			return collection.Insert(property)
+		}); err != nil {
+		return err
+	}
+
 	if err := mongo.Execute("monotonic", PropertyCollection,
 		func(collection *mgo.Collection) error {
 			return collection.RemoveId(bson.ObjectIdHex(ID))
