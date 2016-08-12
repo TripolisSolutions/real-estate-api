@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	log.SetLevel(log.DebugLevel)
+
 	if err := mongo.Startup(); err != nil {
 		log.Fatalf("error[%s] while startup mongodb connection", err)
 	}

@@ -35,6 +35,10 @@ func (*imageHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params)
 	var image Image
 	json.Unmarshal(ctx.Request.Body(), &image)
 
+	log.WithFields(log.Fields{
+		"image": image,
+	}).Debug("creating image")
+
 	image.ID = bson.NewObjectId()
 	if err := image.Insert(); err != nil {
 		log.WithFields(log.Fields{
@@ -44,7 +48,11 @@ func (*imageHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params)
 		return
 	}
 
-	ctx.Response.SetStatusCode(http.StatusCreated)
+	log.WithFields(log.Fields{
+		"image": image,
+	}).Debug("created image")
+
+	ctx.Response.SetStatusCode(http.StatusOK)
 	ctx.Response.SetBody(utilities.ToJSON(image))
 }
 
