@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	log.SetLevel(log.DebugLevel)
+
 	if err := mongo.Startup(); err != nil {
 		log.Fatalf("error[%s] while startup mongodb connection", err)
 	}
@@ -25,6 +27,7 @@ func main() {
 
 	category := categoryHandlers{}
 	property := propertyHandlers{}
+	images := imageHandlers{}
 
 	router := fasthttprouter.New()
 	router.GET("/", Index)
@@ -38,6 +41,10 @@ func main() {
 	router.PUT("/properties/:id", property.update)
 	router.DELETE("/properties/:id", property.remove)
 	router.GET("/api/categories", NotFound)
+
+	router.GET("/images", images.find)
+	router.POST("/images", images.create)
+	router.DELETE("/images/:id", images.remove)
 
 	if err := fasthttp.ListenAndServe(":9001", router.Handler); err != nil {
 		log.WithFields(log.Fields{

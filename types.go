@@ -54,28 +54,21 @@ type PropertyCategory struct {
 	UAt time.Time `bson:"u_at" json:"u_at"`
 }
 
-type Image struct {
-	ID     string `bson:"_id" json:"id"`
-	URL    string `bson:"url" json:"url"`
-	Width  int    `bson:"width" json:"width"`
-	Height int    `bson:"height" json:"height"`
-}
-
 type Property struct {
 	ID            bson.ObjectId      `bson:"_id" json:"id"`
 	Name          []TranslatableText `bson:"name" json:"name"`
-	Thumbnail     Image              `bson:"thumbnailImage" json:"thumbnailImage"`
+	Thumbnail     *Image             `bson:"thumbnailImage,omitempty" json:"thumbnailImage,omitempty"`
 	GalleryImages []Image            `bson:"galleryImages" json:"galleryImages"`
 	Desc          []TranslatableText `bson:"desc" json:"desc"`
 
-	CategoryID     *bson.ObjectId `bson:"categoryID" json:"categoryID"` // PropertyCategory.ID
+	CategoryID     *bson.ObjectId `bson:"categoryID,omitempty" json:"categoryID,omitempty"` // PropertyCategory.ID
 	SalesType      string         `bson:"salesType" json:"salesType"`
-	AvailableUntil time.Time      `bson:"availableUntil" json:"availableUntil"`
-	Size           struct {
+	AvailableUntil *time.Time     `bson:"availableUntil,omitempty" json:"availableUntil,omitempty"`
+	Size           *struct {
 		Width  float32 `bson:"width" json:"width"`
 		Length float32 `bson:"depth" json:"depth"`
-	} `bson:"size" json:"size"`
-	Address struct {
+	} `bson:"size,omitempty" json:"size,omitempty"`
+	Address *struct {
 		Name     []TranslatableText `bson:"name" json:"name"`
 		Viewport struct {
 			Lat  float64 `bson:"lat" json:"lat"`
@@ -88,7 +81,7 @@ type Property struct {
 			Radius float64 `bson:"radius" json:"radius"`
 		} `bson:"circleMarker" json:"circleMarker"`
 		Visible bool `bson:"visible" json:"visible"`
-	} `bson:"address" json:"address"`
+	} `bson:"address,omitempty" json:"address,omitempty"`
 	BedRoomCount    int                     `bson:"bedRoomCount" json:"bedRoomCount"`
 	FacingDirection PropertyFacingDirection `bson:"facingDirection" json:"facingDirection"`
 
@@ -102,4 +95,14 @@ type Property struct {
 
 	CAt time.Time `bson:"c_at" json:"c_at"`
 	UAt time.Time `bson:"u_at" json:"u_at"`
+}
+
+type Image struct {
+	ID       bson.ObjectId `bson:"_id" json:"id"`
+	URL      string        `bson:"url" json:"url"`
+	Width    int           `bson:"width" json:"width"`
+	Height   int           `bson:"height" json:"height"`
+	FileName string        `bson:"fileName" json:"fileName"`
+	CAt      time.Time     `bson:"c_at" json:"c_at"`
+	UAt      time.Time     `bson:"u_at" json:"u_at"`
 }

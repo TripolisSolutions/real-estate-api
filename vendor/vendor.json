@@ -69,6 +69,12 @@
 			"revisionTime": "2016-02-19T14:26:09Z"
 		},
 		{
+			"checksumSHA1": "w+IjasiTuEQv+ZLtC4nnNMJ+zPE=",
+			"path": "github.com/microcosm-cc/bluemonday",
+			"revision": "9dc199233bf72cc1aad9b61f73daf2f0075b9ee4",
+			"revisionTime": "2016-07-01T10:37:12Z"
+		},
+		{
 			"checksumSHA1": "cWweVM411vqH1MR1jriEq6cT100=",
 			"path": "github.com/valyala/bytebufferpool",
 			"revision": "928aed2629ab6f9bca48045451feefb20161601e",
@@ -85,6 +91,18 @@
 			"path": "github.com/valyala/fasthttp/fasthttputil",
 			"revision": "3d3774799e6e558a26fb000e5dd90db6d3d64595",
 			"revisionTime": "2016-06-24T14:29:10Z"
+		},
+		{
+			"checksumSHA1": "vqc3a+oTUGX8PmD0TS+qQ7gmN8I=",
+			"path": "golang.org/x/net/html",
+			"revision": "4d38db76854b199960801a1734443fd02870d7e1",
+			"revisionTime": "2016-07-20T03:23:22Z"
+		},
+		{
+			"checksumSHA1": "00eQaGynDYrv3tL+C7l9xH0IDZg=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "4d38db76854b199960801a1734443fd02870d7e1",
+			"revisionTime": "2016-07-20T03:23:22Z"
 		},
 		{
 			"checksumSHA1": "4pi0MZxLqwEq4apmYY9ey08nBuI=",
