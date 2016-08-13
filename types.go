@@ -66,20 +66,20 @@ type Property struct {
 	AvailableUntil *time.Time     `bson:"availableUntil,omitempty" json:"availableUntil,omitempty"`
 	Size           *struct {
 		Width  float32 `bson:"width" json:"width"`
-		Length float32 `bson:"depth" json:"depth"`
+		Length float32 `bson:"length" json:"length"`
 	} `bson:"size,omitempty" json:"size,omitempty"`
 	Address *struct {
 		Name     []TranslatableText `bson:"name" json:"name"`
-		Viewport struct {
+		Viewport *struct {
 			Lat  float64 `bson:"lat" json:"lat"`
 			Lng  float64 `bson:"lng" json:"lng"`
 			Zoom float64 `bson:"zoom" json:"zoom"`
-		} `bson:"viewport" json:"viewport"`
-		CircleMarker struct {
+		} `bson:"viewport,omitempty" json:"viewpor,omitemptyt"`
+		CircleMarker *struct {
 			Lat    float64 `bson:"lat" json:"lat"`
 			Lng    float64 `bson:"lng" json:"lng"`
 			Radius float64 `bson:"radius" json:"radius"`
-		} `bson:"circleMarker" json:"circleMarker"`
+		} `bson:"circleMarker,omitempty" json:"circleMarker,omitempty"`
 		Visible bool `bson:"visible" json:"visible"`
 	} `bson:"address,omitempty" json:"address,omitempty"`
 	BedRoomCount    int                     `bson:"bedRoomCount" json:"bedRoomCount"`

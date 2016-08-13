@@ -38,7 +38,11 @@ func FindProperties(filterers bson.M, limit, offset int) ([]Property, error) {
 	var properties []Property
 	if err := mongo.Execute("monotonic", PropertyCollection,
 		func(collection *mgo.Collection) error {
-			return collection.Find(filterers).Limit(limit).Skip(offset).All(&properties)
+			return collection.Find(filterers).
+				Limit(limit).
+				Skip(offset).
+				Sort("-c_at").
+				All(&properties)
 		}); err != nil {
 		return properties, err
 	}
