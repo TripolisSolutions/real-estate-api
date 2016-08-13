@@ -7,9 +7,9 @@ import (
 )
 
 var sanitizeHtmlOnce sync.Once
+var p *bluemonday.Policy
 
 func sanitizeHtml(inHtml string) (string, error) {
-	var p *bluemonday.Policy
 
 	sanitizeHtmlOnce.Do(func() {
 		p = bluemonday.UGCPolicy()

@@ -126,10 +126,16 @@ func (*propertyHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 
 func (*propertyHandlers) update(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params) {
 	var property Property
-	json.Unmarshal(ctx.Request.Body(), &property)
 
-	id := ps.ByName("id")
-	property.ID = bson.ObjectIdHex(id)
+	if err := property.FindByID(ps.ByName("id")); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to find property")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	}
+
+	json.Unmarshal(ctx.Request.Body(), &property)
 
 	log.WithFields(log.Fields{
 		"property": property,
