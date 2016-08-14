@@ -76,7 +76,7 @@ type Property struct {
 			Lat  float64 `bson:"lat" json:"lat"`
 			Lng  float64 `bson:"lng" json:"lng"`
 			Zoom float64 `bson:"zoom" json:"zoom"`
-		} `bson:"viewport,omitempty" json:"viewpor,omitemptyt"`
+		} `bson:"viewport,omitempty" json:"viewport,omitemptyt"`
 		CircleMarker *struct {
 			Lat    float64 `bson:"lat" json:"lat"`
 			Lng    float64 `bson:"lng" json:"lng"`
