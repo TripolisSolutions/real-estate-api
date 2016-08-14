@@ -226,7 +226,7 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 		return
 	}
 
-	total, err := CountProperties()
+	total, err := CountProperties(filterers)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,

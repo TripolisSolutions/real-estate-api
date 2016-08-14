@@ -50,11 +50,11 @@ func FindProperties(filterers bson.M, limit, offset int) ([]Property, error) {
 	return properties, nil
 }
 
-func CountProperties() (int, error) {
+func CountProperties(filterers bson.M) (int, error) {
 	var result int
 	if err := mongo.Execute("monotonic", PropertyCollection,
 		func(collection *mgo.Collection) error {
-			count, err := collection.Find(nil).Count()
+			count, err := collection.Find(filterers).Count()
 			result = count
 			return err
 		}); err != nil {
