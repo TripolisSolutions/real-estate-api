@@ -40,7 +40,7 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 		limit = 100
 	}
 
-	var filterers bson.M
+	var filterers = bson.M{}
 
 	q := strings.TrimSpace(queries.Get("q"))
 	language := strings.TrimSpace(queries.Get("language"))
