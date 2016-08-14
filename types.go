@@ -67,9 +67,11 @@ type Property struct {
 	Size           *struct {
 		Width  float32 `bson:"width" json:"width"`
 		Length float32 `bson:"length" json:"length"`
+		Area   float32 `bson:"area" json:"area"`
 	} `bson:"size,omitempty" json:"size,omitempty"`
 	Address *struct {
 		Name     []TranslatableText `bson:"name" json:"name"`
+		District string             `bson:"district" json:"district"`
 		Viewport *struct {
 			Lat  float64 `bson:"lat" json:"lat"`
 			Lng  float64 `bson:"lng" json:"lng"`

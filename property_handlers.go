@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
@@ -25,13 +26,29 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 		return
 	}
 
-	limit := ParseIntWithFallback(queries.Get("limit"), 50)
-	offset := ParseIntWithFallback(queries.Get("offset"), 0)
+	limit := ParseIntWithFallback(queries.Get("limit"), 20)
+	var offset int
+
+	offset = ParseIntWithFallback(queries.Get("offset"), 0)
+
+	if queries.Get("page") != "" {
+		page := ParseIntWithFallback(queries.Get("page"), 0)
+		offset = page * limit
+	}
+
+	if limit > 100 {
+		limit = 100
+	}
 
 	var filterers bson.M
 
 	q := strings.TrimSpace(queries.Get("q"))
 	language := strings.TrimSpace(queries.Get("language"))
+
+	if queries.Get("lang") != "" {
+		language = langCodeToLanguage(queries.Get("lang"))
+	}
+
 	if q != "" {
 		if language == "" || !isLanguageSupported(language) {
 			log.WithFields(log.Fields{
@@ -58,6 +75,137 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 			return
 		}
 		filterers["category_id"] = bson.ObjectIdHex(categoryID)
+	}
+
+	salesType := strings.TrimSpace(queries.Get("salesType"))
+	if salesType != "" {
+		filterers["salesType"] = salesType
+	}
+
+	minBed := strings.TrimSpace(queries.Get("minBed"))
+	if minBed != "" {
+		minBedValue, err := strconv.Atoi(minBed)
+		if err != nil {
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'minBed' param")
+			return
+		}
+		filterers["bedRoomCount"] = bson.M{
+			"$gte": minBedValue,
+		}
+	}
+
+	maxBed := strings.TrimSpace(queries.Get("maxBed"))
+	if maxBed != "" {
+		maxBedValue, err := strconv.Atoi(maxBed)
+		if err != nil {
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'maxBed' param")
+			return
+		}
+		filterers["bedRoomCount"] = bson.M{
+			"$lte": maxBedValue,
+		}
+	}
+
+	currency := strings.TrimSpace(queries.Get("currency"))
+
+	minPrice := strings.TrimSpace(queries.Get("minPrice"))
+	if minPrice != "" {
+		minPriceValue, err := strconv.Atoi(minPrice)
+		if err != nil {
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'minPrice' param")
+			return
+		}
+
+		if !isCurrencySupported(currency) {
+			log.WithFields(log.Fields{
+				"currency": currency,
+			}).Infof("invalid currency")
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'currency' param")
+			return
+		}
+
+		filterers["price"] = bson.M{
+			"$elemMatch": bson.M{
+				"currency": currency,
+				"value": bson.M{
+					"$gte": minPriceValue,
+				},
+			},
+		}
+	}
+
+	maxPrice := strings.TrimSpace(queries.Get("maxPrice"))
+	if maxPrice != "" {
+		maxPriceValue, err := strconv.Atoi(maxPrice)
+		if err != nil {
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'maxPrice' param")
+			return
+		}
+
+		if !isCurrencySupported(currency) {
+			log.WithFields(log.Fields{
+				"currency": currency,
+			}).Infof("invalid currency")
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'currency' param")
+			return
+		}
+
+		filterers["price"] = bson.M{
+			"$elemMatch": bson.M{
+				"currency": currency,
+				"value": bson.M{
+					"$lte": maxPriceValue,
+				},
+			},
+		}
+	}
+
+	district := strings.TrimSpace(queries.Get("district"))
+	if district != "" {
+		filterers["address.district"] = district
+	}
+
+	size := strings.TrimSpace(queries.Get("size"))
+	// e.g. -30, 80-100, 500-
+	if size != "" {
+		frags := strings.Split(size, "-")
+		if len(frags) != 2 {
+			ctx.Response.SetStatusCode(http.StatusBadRequest)
+			ctx.Response.SetBodyString("invalid 'size' param: " + size)
+			return
+		}
+
+		if frags[0] != "" {
+			from, err := strconv.Atoi(frags[0])
+			if err != nil {
+				ctx.Response.SetStatusCode(http.StatusBadRequest)
+				ctx.Response.SetBodyString("invalid 'size' param")
+				return
+			}
+
+			filterers["size.area"] = bson.M{
+				"$gte": from,
+			}
+		}
+
+		if frags[1] != "" {
+			to, err := strconv.Atoi(frags[1])
+			if err != nil {
+				ctx.Response.SetStatusCode(http.StatusBadRequest)
+				ctx.Response.SetBodyString("invalid 'size' param")
+				return
+			}
+
+			filterers["size.area"] = bson.M{
+				"$lte": to,
+			}
+		}
 	}
 
 	log.WithFields(log.Fields{

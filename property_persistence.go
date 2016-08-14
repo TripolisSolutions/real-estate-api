@@ -88,6 +88,10 @@ func (property *Property) Insert() error {
 		property.Desc[i].Text = sanitizedHtml
 	}
 
+	if property.Size != nil {
+		property.Size.Area = property.Size.Length * property.Size.Width
+	}
+
 	if err := mongo.Execute("monotonic", PropertyCollection,
 		func(collection *mgo.Collection) error {
 			return collection.Insert(property)
@@ -108,6 +112,10 @@ func (property *Property) Update() error {
 		}
 
 		property.Desc[i].Text = sanitizedHtml
+	}
+
+	if property.Size != nil {
+		property.Size.Area = property.Size.Length * property.Size.Width
 	}
 
 	if err := mongo.Execute("monotonic", PropertyCollection,
