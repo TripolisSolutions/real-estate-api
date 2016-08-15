@@ -74,7 +74,7 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 			ctx.Response.SetBodyString("invalid 'category' param")
 			return
 		}
-		filterers["category_id"] = bson.ObjectIdHex(categoryID)
+		filterers["categoryID"] = bson.ObjectIdHex(categoryID)
 	}
 
 	salesType := strings.TrimSpace(queries.Get("salesType"))
