@@ -88,8 +88,9 @@ type Property struct {
 	FacingDirection PropertyFacingDirection `bson:"facingDirection" json:"facingDirection"`
 
 	RentalPeriod struct {
-		Digits float32          `bson:"digits" json:"digits"`
-		Unit   RentalPeriodUnit `bson:"unit" json:"unit"`
+		Negotiable bool             `bson:"negotiable" json:"negotiable"`
+		Digits     float32          `bson:"digits" json:"digits"`
+		Unit       RentalPeriodUnit `bson:"unit" json:"unit"`
 	} `bson:"rentalPeriod" json:"rentalPeriod"`
 	Price []TranslatablePrice `bson:"price" json:"price"`
 

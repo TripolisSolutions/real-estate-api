@@ -88,8 +88,10 @@ func (property *Property) Insert() error {
 		property.Desc[i].Text = sanitizedHtml
 	}
 
-	if property.Size != nil {
-		property.Size.Area = property.Size.Length * property.Size.Width
+	if property.Size != nil && property.Size.Area == 0 {
+		if property.Size.Length != 0 && property.Size.Width != 0 {
+			property.Size.Area = property.Size.Length * property.Size.Width
+		}
 	}
 
 	if err := mongo.Execute("monotonic", PropertyCollection,
