@@ -57,7 +57,7 @@ type PropertyCategory struct {
 type PropertyContactInfo struct {
 	Phone       string `bson:"phone" json:"phone"`
 	OwnerName   string `bson:"ownerName" json:"ownerName"`
-	OwnerAvatar string `bson:"ownerAvatar" json:"ownerAvatar"`
+	OwnerAvatar Image  `bson:"ownerAvatar" json:"ownerAvatar"`
 }
 
 type Property struct {
