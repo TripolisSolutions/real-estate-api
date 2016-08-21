@@ -28,6 +28,7 @@ func main() {
 	category := categoryHandlers{}
 	property := propertyHandlers{}
 	images := imageHandlers{}
+	contactInfo := contactInfoHandlers{}
 
 	router := fasthttprouter.New()
 	router.GET("/", Index)
@@ -45,6 +46,8 @@ func main() {
 	router.GET("/images", images.find)
 	router.POST("/images", images.create)
 	router.DELETE("/images/:id", images.remove)
+
+	router.GET("/contact_info/defaults", contactInfo.find)
 
 	if err := fasthttp.ListenAndServe(":9001", router.Handler); err != nil {
 		log.WithFields(log.Fields{

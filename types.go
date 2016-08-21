@@ -54,12 +54,20 @@ type PropertyCategory struct {
 	UAt time.Time `bson:"u_at" json:"u_at"`
 }
 
+type PropertyContactInfo struct {
+	Phone       string `bson:"phone" json:"phone"`
+	OwnerName   string `bson:"ownerName" json:"ownerName"`
+	OwnerAvatar Image  `bson:"ownerAvatar" json:"ownerAvatar"`
+}
+
 type Property struct {
 	ID            bson.ObjectId      `bson:"_id" json:"id"`
 	Name          []TranslatableText `bson:"name" json:"name"`
 	Thumbnail     *Image             `bson:"thumbnailImage,omitempty" json:"thumbnailImage,omitempty"`
 	GalleryImages []Image            `bson:"galleryImages" json:"galleryImages"`
 	Desc          []TranslatableText `bson:"desc" json:"desc"`
+
+	ContactInfo []PropertyContactInfo `bson:"contactInfos" json:"contactInfos"`
 
 	CategoryID     *bson.ObjectId `bson:"categoryID,omitempty" json:"categoryID,omitempty"` // PropertyCategory.ID
 	SalesType      string         `bson:"salesType" json:"salesType"`

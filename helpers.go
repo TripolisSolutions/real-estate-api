@@ -10,7 +10,7 @@ func ParseIntWithFallback(v string, def int) int {
 	return int(i)
 }
 
-var SupportedLanguages = []string{"vietnamese", "english"}
+var SupportedLanguages = []string{"vietnamese", "english", "none"}
 
 func isLanguageSupported(language string) bool {
 	for _, lang := range SupportedLanguages {
@@ -27,7 +27,7 @@ func langCodeToLanguage(lang string) string {
 	case "vi":
 		fallthrough
 	case "vi-VN":
-		return "vietnamese"
+		return "none"
 	default:
 		return "english"
 	}
