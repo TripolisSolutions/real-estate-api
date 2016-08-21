@@ -264,6 +264,14 @@ func (*propertyHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 		return
 	}
 
+	if err := property.ContactInfo[0].SaveAsDefault(); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to save contact info as default")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	}
+
 	ctx.Response.SetStatusCode(http.StatusCreated)
 	ctx.Response.SetBody(utilities.ToJSON(struct {
 		Doc Property `json:"doc"`
@@ -293,6 +301,14 @@ func (*propertyHandlers) update(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 		log.WithFields(log.Fields{
 			"error": err,
 		}).Errorf("fail to insert property")
+		ctx.Response.SetStatusCode(http.StatusInternalServerError)
+		return
+	}
+
+	if err := property.ContactInfo[0].SaveAsDefault(); err != nil {
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Errorf("fail to save contact info as default")
 		ctx.Response.SetStatusCode(http.StatusInternalServerError)
 		return
 	}

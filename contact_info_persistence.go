@@ -29,13 +29,16 @@ func seedDefaultContactInfo() error {
 		OwnerAvatar: avatar,
 	}
 
+	return info.Insert()
+}
+
+func (c *PropertyContactInfo) Insert() error {
 	if err := mongo.Execute("monotonic", propertyDefaultContactInfoCollection,
 		func(collection *mgo.Collection) error {
-			return collection.Insert(info)
+			return collection.Insert(c)
 		}); err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -48,4 +51,16 @@ func findDefaultContactInfo() ([]PropertyContactInfo, error) {
 		return result, err
 	}
 	return result, nil
+}
+
+func (c *PropertyContactInfo) SaveAsDefault() error {
+	if err := mongo.Execute("monotonic", propertyDefaultContactInfoCollection,
+		func(collection *mgo.Collection) error {
+			_, err := collection.RemoveAll(nil)
+			return err
+		}); err != nil {
+		return err
+	}
+
+	return c.Insert()
 }
