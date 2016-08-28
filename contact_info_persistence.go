@@ -23,13 +23,23 @@ func seedDefaultContactInfo() error {
 		return err
 	}
 
-	info := PropertyContactInfo{
+	info1 := PropertyContactInfo{
 		Phone:       "(+84) 981 688 076",
 		OwnerName:   "Sonia-Phuong Tran",
 		OwnerAvatar: avatar,
 	}
 
-	return info.Insert()
+	if err := info1.Insert(); err != nil {
+		return err
+	}
+
+	info2 := PropertyContactInfo{
+		Phone:       "(+84) 981 688 075",
+		OwnerName:   "Dean Walkerden",
+		OwnerAvatar: avatar,
+	}
+
+	return info2.Insert()
 }
 
 func (c *PropertyContactInfo) Insert() error {
@@ -53,7 +63,7 @@ func findDefaultContactInfo() ([]PropertyContactInfo, error) {
 	return result, nil
 }
 
-func (c *PropertyContactInfo) SaveAsDefault() error {
+func SaveAsDefault(contactInfos []PropertyContactInfo) error {
 	if err := mongo.Execute("monotonic", propertyDefaultContactInfoCollection,
 		func(collection *mgo.Collection) error {
 			_, err := collection.RemoveAll(nil)
@@ -62,5 +72,11 @@ func (c *PropertyContactInfo) SaveAsDefault() error {
 		return err
 	}
 
-	return c.Insert()
+	for _, contactInfo := range contactInfos {
+		if err := contactInfo.Insert(); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
