@@ -264,7 +264,7 @@ func (*propertyHandlers) create(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 		return
 	}
 
-	if err := property.ContactInfo[0].SaveAsDefault(); err != nil {
+	if err := SaveAsDefault(property.ContactInfo); err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 		}).Errorf("fail to save contact info as default")
@@ -305,7 +305,7 @@ func (*propertyHandlers) update(ctx *fasthttp.RequestCtx, ps fasthttprouter.Para
 		return
 	}
 
-	if err := property.ContactInfo[0].SaveAsDefault(); err != nil {
+	if err := SaveAsDefault(property.ContactInfo); err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
 		}).Errorf("fail to save contact info as default")
