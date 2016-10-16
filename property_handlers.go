@@ -175,11 +175,15 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 	// e.g. -30, 80-100, 500-
 	if size != "" {
 		frags := strings.Split(size, "-")
+		log.Println("size", size)
+		log.Println("frags", frags)
 		if len(frags) != 2 {
 			ctx.Response.SetStatusCode(http.StatusBadRequest)
 			ctx.Response.SetBodyString("invalid 'size' param: " + size)
 			return
 		}
+
+		sizeQ := bson.M{}
 
 		if frags[0] != "" {
 			from, err := strconv.Atoi(frags[0])
@@ -189,9 +193,7 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 				return
 			}
 
-			filterers["size.area"] = bson.M{
-				"$gte": from,
-			}
+			sizeQ["$gte"] = from
 		}
 
 		if frags[1] != "" {
@@ -202,10 +204,10 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 				return
 			}
 
-			filterers["size.area"] = bson.M{
-				"$lte": to,
-			}
+			sizeQ["$lte"] = to
 		}
+
+		filterers["size.area"] = sizeQ
 	}
 
 	log.WithFields(log.Fields{
