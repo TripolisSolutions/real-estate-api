@@ -83,6 +83,10 @@ func (*propertyHandlers) find(ctx *fasthttp.RequestCtx, ps fasthttprouter.Params
 	}
 
 	minBed := strings.TrimSpace(queries.Get("minBed"))
+	bed := strings.TrimSpace(queries.Get("bed")) // 1+, 2+, 3+, 4+, 5+
+	if bed != "" {
+		minBed = strings.TrimRight(bed, "+")
+	}
 	if minBed != "" {
 		minBedValue, err := strconv.Atoi(minBed)
 		if err != nil {
